@@ -11,13 +11,17 @@ jobs:
         with:
           distribution: temurin
           java-version: '21'
+      - name: Configure memory
+        run: |
+          grep -q "^org.gradle.jvmargs" gradle.properties &&             sed -i 's/^org.gradle.jvmargs.*/org.gradle.jvmargs = -Xmx12G -Dfile.encoding=UTF-8/' gradle.properties ||             echo "org.gradle.jvmargs = -Xmx12G -Dfile.encoding=UTF-8" >> gradle.properties
+          grep jvmargs gradle.properties
       - name: Apply patches
         run: |
           git config --global user.email "ci@local"
           git config --global user.name "CI"
-          ./gradlew applyAllPatches --no-daemon -Dorg.gradle.jvmargs=-Xmx12G
+          ./gradlew applyAllPatches --no-daemon
       - name: Build paperclip
-        run: ./gradlew createMojmapPaperclipJar --no-daemon -Dorg.gradle.jvmargs=-Xmx12G
+        run: ./gradlew createMojmapPaperclipJar --no-daemon
       - name: Locate jars
         run: find . -name "*.jar" | grep -iE "paperclip|bundler" || true
       - name: Upload artifact
