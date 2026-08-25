@@ -17,10 +17,10 @@ jobs:
           git config --global user.name "CI"
           ./gradlew applyAllPatches --no-daemon -Dorg.gradle.jvmargs=-Xmx5G
       - name: Build paperclip
-        run: ./gradlew createReobfPaperclipJar --no-daemon -Dorg.gradle.jvmargs=-Xmx5G
+        run: ./gradlew createMojmapPaperclipJar --no-daemon -Dorg.gradle.jvmargs=-Xmx5G
       - name: Upload artifact
         uses: actions/upload-artifact@v4
         with:
           name: plazma-paperclip-reobf
-          path: build/libs/plazma-paperclip-*-reobf.jar
+          path: build/libs/plazma-paperclip-*.jar
           if-no-files-found: error
