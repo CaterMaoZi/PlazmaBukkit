@@ -15,9 +15,9 @@ jobs:
         run: |
           git config --global user.email "ci@local"
           git config --global user.name "CI"
-          ./gradlew applyAllPatches --no-daemon -Dorg.gradle.jvmargs=-Xmx5G
+          ./gradlew applyAllPatches --no-daemon -Dorg.gradle.jvmargs=-Xmx12G
       - name: Build paperclip
-        run: ./gradlew createMojmapPaperclipJar --no-daemon -Dorg.gradle.jvmargs=-Xmx5G
+        run: ./gradlew createMojmapPaperclipJar --no-daemon -Dorg.gradle.jvmargs=-Xmx12G
       - name: Locate jars
         run: find . -name "*.jar" | grep -iE "paperclip|bundler" || true
       - name: Upload artifact
